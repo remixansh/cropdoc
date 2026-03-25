@@ -36,8 +36,8 @@ export default function HomePage() {
 
   return (
     <div className="font-body text-on-surface antialiased bg-surface min-h-screen">
-      {/* TopAppBar */}
-      <header className="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-14 max-w-md mx-auto bg-[#fbf9f4] dark:bg-[#1b1c19]">
+      {/* TopAppBar - only visible on small screens since Sidebar takes over on md */}
+      <header className="fixed top-0 left-0 right-0 z-50 flex md:hidden justify-between items-center px-4 h-14 bg-[#fbf9f4] dark:bg-[#1b1c19] border-b border-surface-variant/30 shadow-sm">
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-[#0f5238] dark:text-[#b1f0ce]" style={{fontVariationSettings: "'FILL' 1"}}>eco</span>
           <h1 className="font-headline font-bold text-[17px] tracking-tight text-[#0f5238] dark:text-[#b1f0ce]">CropDoc</h1>
@@ -45,21 +45,24 @@ export default function HomePage() {
         <div className="text-[#0f5238] dark:text-[#b1f0ce] font-headline font-bold text-[17px] tracking-tight">EN | HI</div>
       </header>
 
-      <main className="pt-20 pb-24 px-4 max-w-md mx-auto min-h-screen flex flex-col">
-        {/* Hero Image */}
-        <div className="mb-8 overflow-hidden rounded-xl h-48 w-full relative">
-          <img alt="Leaf" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ2xix83actB1HNhbX1Rg5-929jxbrFfoBZCEvSxuzYPoeSjOWJa7VWBC-6IPYbryuSNfsCj1rCexp4UvjDD_3hAzy-dhrGf2YqrDTpZuiT2d3wO51v9mpeEXpGwPAE9QuMw8LgsGJoiLiB0ojAdlAKD4o7cznSLip0sLHy8cLiGPUSnO0UVN4eMqYvF1eDXJUa9Fk5dvRP4_7QoSz4C6l_dURqkw_BnlRtVg5ux5xojf4FjKB8EzqLFEg7wuP_usrPqIBYZd9CS0G"/>
-          <div className="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
-        </div>
+      <main className="pt-20 pb-24 px-4 max-w-[1200px] mx-auto min-h-screen flex flex-col md:grid md:grid-cols-2 md:gap-12 md:items-start md:pt-14">
+        {/* Left Column for Desktop */}
+        <div className="flex flex-col md:sticky md:top-24 mt-4 md:mt-0">
+          {/* Hero Image */}
+          <div className="mb-6 md:mb-8 overflow-hidden rounded-xl h-48 md:h-[300px] lg:h-[350px] w-full relative shadow-sm">
+            <img alt="Leaf" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ2xix83actB1HNhbX1Rg5-929jxbrFfoBZCEvSxuzYPoeSjOWJa7VWBC-6IPYbryuSNfsCj1rCexp4UvjDD_3hAzy-dhrGf2YqrDTpZuiT2d3wO51v9mpeEXpGwPAE9QuMw8LgsGJoiLiB0ojAdlAKD4o7cznSLip0sLHy8cLiGPUSnO0UVN4eMqYvF1eDXJUa9Fk5dvRP4_7QoSz4C6l_dURqkw_BnlRtVg5ux5xojf4FjKB8EzqLFEg7wuP_usrPqIBYZd9CS0G"/>
+            <div className="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
+          </div>
 
-        {/* Headline */}
-        <div className="mb-6">
-          <span className="font-label text-[10px] uppercase tracking-[0.15em] text-outline mb-1 block">Plant Diagnostics</span>
-          <h2 className="font-headline text-3xl font-medium text-on-surface leading-tight">Identify health issues instantly.</h2>
+          {/* Headline */}
+          <div className="mb-6 md:mb-0">
+            <span className="font-label text-[10px] uppercase tracking-[0.15em] text-outline mb-1 block">Plant Diagnostics</span>
+            <h2 className="font-headline text-3xl lg:text-5xl font-medium text-on-surface leading-tight">Identify health issues instantly.</h2>
+          </div>
         </div>
 
         {/* Right Column for Desktop */}
-        <div className="flex flex-col flex-1 h-full min-h-[calc(100vh-140px)]">
+        <div className="flex flex-col flex-1 h-full min-h-[calc(100vh-140px)] md:min-h-0 container max-w-md mx-auto md:mx-0 md:max-w-none">
 
         <div className="w-full md:flex-1 order-2 flex flex-col justify-center">
           {/* Upload Zone */}
@@ -112,11 +115,11 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Bottom Nav */}
-      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md mx-auto bg-[#fbf9f4]/85 dark:bg-[#1b1c19]/85 backdrop-blur-md border-t border-[#bfc9c1]/15 rounded-t-2xl">
+      {/* Bottom Nav - Only on mobile devices */}
+      <nav className="fixed bottom-0 left-0 w-full z-50 flex md:hidden justify-around items-center px-6 pb-6 pt-2 bg-[#fbf9f4]/85 dark:bg-[#1b1c19]/85 backdrop-blur-md border-t border-[#bfc9c1]/15 rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
         <button className="flex flex-col items-center justify-center bg-[#2d6a4f] text-white rounded-xl p-3"><span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>home</span></button>
-        <button className="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all"><span className="material-symbols-outlined">camera_alt</span></button>
-        <button className="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all"><span className="material-symbols-outlined">person</span></button>
+        <button className="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#2d6a4f]/10 dark:hover:bg-[#32332e] rounded-xl transition-all"><span className="material-symbols-outlined">camera_alt</span></button>
+        <button className="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#2d6a4f]/10 dark:hover:bg-[#32332e] rounded-xl transition-all"><span className="material-symbols-outlined">person</span></button>
       </nav>
     </div>
   );

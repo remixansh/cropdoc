@@ -26,7 +26,7 @@ export default function ResultPage({ presetData, onNewScan }) {
      }
   });
 
-  const markdownText = treatmentContent.join('\\n');
+  const markdownText = treatmentContent.join('\n');
 
   return (
     <div className="bg-[#f7f5f0] text-on-surface min-h-screen">

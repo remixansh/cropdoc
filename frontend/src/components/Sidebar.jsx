@@ -21,7 +21,7 @@ export default function Sidebar() {
       {/* Mobile Hamburger Button */}
       <button 
         onClick={() => setIsOpen(true)}
-        className="md:hidden fixed top-2 left-3 z-[60] w-10 h-10 flex items-center justify-center text-[#0f5238] dark:text-[#b1f0ce] hover:bg-black/5 rounded-full transition-colors"
+        className="md:hidden fixed top-2 left-3 z-[60] w-10 h-10 flex items-center justify-center text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors"
       >
         <span className="material-symbols-outlined">menu</span>
       </button>

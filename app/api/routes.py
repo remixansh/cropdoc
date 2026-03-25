@@ -1,7 +1,9 @@
 from fastapi import APIRouter, File, UploadFile, Form
+from fastapi.responses import StreamingResponse
+import json
 from app.services.inference import predict_image
 from app.services.weather import get_weather_forecast
-from app.services.ai_generator import generate_action_plan
+from app.services.ai_generator import generate_action_plan_stream
 
 router = APIRouter()
 
@@ -15,28 +17,28 @@ async def predict(
 ):
     """
     Endpoint for plant disease prediction.
-    Takes an image file and context parameters, returns action plan and predictions.
+    Streams an initialization payload and then sequential AI text chunks identically matching NDJSON format.
     """
-    # 1. Image preprocessing and inference
     image_bytes = await file.read()
     crop, disease, confidence = predict_image(image_bytes)
     
-    # 2. Weather fetching
     weather_context = await get_weather_forecast(latitude, longitude)
     
-    # 3. GenAI prompt formulation
-    treatment_plan, yield_impact_estimate = await generate_action_plan(
-        crop, disease, farm_size, weather_context, language
-    )
-    
-    return {
-        "status": "success",
-        "data": {
-            "crop": crop,
-            "disease": disease,
-            "confidence_score": confidence,
-            "weather_context": weather_context,
-            "yield_impact_estimate": yield_impact_estimate,
-            "treatment_plan": treatment_plan
+    async def generate_response():
+        # First yield the completely processed ML and Weather data synchronously to bootstrap React UI
+        init_payload = {
+            "type": "init",
+            "data": {
+                "crop": crop,
+                "disease": disease,
+                "confidence_score": confidence,
+                "weather_context": weather_context
+            }
         }
-    }
+        yield json.dumps(init_payload) + "\\n"
+        
+        # Now yield the slower, organic GenAI treatment plan dynamically in chunks
+        async for chunk in generate_action_plan_stream(crop, disease, farm_size, weather_context, language):
+            yield json.dumps({"type": "chunk", "text": chunk}) + "\\n"
+            
+    return StreamingResponse(generate_response(), media_type="application/x-ndjson")

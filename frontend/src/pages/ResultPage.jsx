@@ -1,18 +1,31 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function ResultPage() {
+export default function ResultPage({ presetData, onNewScan }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const data = location.state;
+  // Allow running directly from Route state OR passed props via AnalyzingPage streaming
+  const data = presetData || location.state;
 
   if (!data) return <button onClick={() => navigate('/')}>Go Back</button>;
+
+  // Dynamically parse the streaming markdown block from GenAI
+  const rawText = data.treatmentRaw || "";
+  
+  // Look for any line containing % to identify the Yield sentence (e.g. "Potential 20-30% loss")
+  const textLines = rawText.split('\\n');
+  const yieldImpactSentence = textLines.find(line => line.includes('%') || line.toLowerCase().includes('yield'));
+  
+  // Extract Steps (e.g., "1. ...", "2. ...")
+  const stepsList = textLines
+      .filter(line => line.match(/^\d+\./))
+      .map(line => line.replace(/^\d+\.\s*/, '').replace(/\*\*/g, ''));
 
   return (
     <div className="bg-[#f7f5f0] text-on-surface min-h-screen">
       <header className="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-14 max-w-md mx-auto bg-[#fbf9f4] dark:bg-[#1b1c19]">
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate('/')} className="hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-colors p-2 rounded-full">
+          <button onClick={onNewScan || (() => navigate('/'))} className="hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-colors p-2 rounded-full">
             <span className="material-symbols-outlined text-[#0f5238] dark:text-[#b1f0ce]">arrow_back</span>
           </button>
           <h1 className="font-serif font-bold text-[17px] tracking-tight text-[#0f5238] dark:text-[#b1f0ce]">New scan</h1>
@@ -42,10 +55,10 @@ export default function ResultPage() {
           </div>
         </section>
 
-        {data.yieldImpact && (
-            <section className="bg-[#E07B39]/10 border-l-[3px] border-l-[#E07B39] p-4 rounded-lg flex items-center gap-3">
-            <span className="material-symbols-outlined text-[#7A3D10] text-[20px]">warning</span>
-            <p className="text-[12px] font-medium text-[#7A3D10]">{data.yieldImpact.replace(/\*/g, '')}</p>
+        {yieldImpactSentence && (
+            <section className="bg-[#E07B39]/10 border-l-[3px] border-l-[#E07B39] p-4 rounded-lg flex items-center gap-3 animate-pulse">
+              <span className="material-symbols-outlined text-[#7A3D10] text-[20px]">warning</span>
+              <p className="text-[12px] font-medium text-[#7A3D10]">{yieldImpactSentence.replace(/\*/g, '')}</p>
             </section>
         )}
 
@@ -53,14 +66,19 @@ export default function ResultPage() {
           <div className="p-4">
             <h3 className="text-[13px] font-medium text-[#1A1A1A] mb-4">Recommended actions</h3>
             <div className="space-y-4">
-              {data.treatment?.map((step, idx) => (
-                  <div key={idx} className="flex gap-3 items-start">
+              {stepsList.length > 0 ? stepsList.map((step, idx) => (
+                  <div key={idx} className="flex gap-3 items-start animate-fade-in transition-all">
                   <div className="w-6 h-6 rounded-full bg-[#2d6a4f]/10 flex items-center justify-center flex-shrink-0">
                       <span className="text-[11px] font-bold text-[#2d6a4f]">{idx + 1}</span>
                   </div>
                   <p className="text-[14px] text-on-surface-variant pt-0.5">{step}</p>
                   </div>
-              ))}
+              )) : (
+                  <div className="flex gap-3 items-center">
+                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse-custom"></div>
+                    <p className="text-[14px] text-on-surface-variant italic">Generating treatment plan...</p>
+                  </div>
+              )}
 
               <div className="bg-[#FDF0E6] rounded-xl p-3 mt-4">
                 <p className="text-[9px] font-bold text-[#7A6010] tracking-wider mb-1 uppercase">AI ADVISORY</p>
@@ -70,7 +88,7 @@ export default function ResultPage() {
           </div>
         </section>
 
-        <button onClick={() => navigate('/')} className="w-full h-12 border-[1.5px] border-[#2d6a4f] text-[#2d6a4f] font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-[#2d6a4f]/5 transition-colors active:scale-95 duration-150">
+        <button onClick={onNewScan || (() => navigate('/'))} className="w-full h-12 border-[1.5px] border-[#2d6a4f] text-[#2d6a4f] font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-[#2d6a4f]/5 transition-colors active:scale-95 duration-150">
           <span className="material-symbols-outlined text-[20px]">photo_camera</span>
           Scan another plant
         </button>

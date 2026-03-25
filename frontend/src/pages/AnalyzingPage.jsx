@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import ResultPage from './ResultPage';
 
 export default function AnalyzingPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [view, setView] = useState('analyzing');
+  const [initData, setInitData] = useState(null);
+  const [streamedText, setStreamedText] = useState("");
 
   useEffect(() => {
     if (!location.state?.file) {
@@ -14,7 +17,7 @@ export default function AnalyzingPage() {
     }
 
     const performAnalysis = async () => {
-      // Simulate UI steps while the heavy API call goes in parallel
+      // Simulate UI steps parallel to stream bootstrap
       const timer1 = setTimeout(() => setStep(2), 2000);
       const timer2 = setTimeout(() => setStep(3), 5000);
 
@@ -24,40 +27,66 @@ export default function AnalyzingPage() {
         formData.append('latitude', location.state.lat);
         formData.append('longitude', location.state.lon);
         formData.append('farm_size', location.state.farmSize);
-        formData.append('language', 'en'); // Hardcoded default for MVP
+        formData.append('language', 'en'); // Default
 
-        const res = await axios.post('http://127.0.0.1:8000/api/predict', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
+        // Native fetch for stream consumption
+        const res = await fetch('http://127.0.0.1:8000/api/predict', {
+          method: 'POST',
+          body: formData
         });
-        
+
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
         clearTimeout(timer1);
         clearTimeout(timer2);
         
-        // Safely map the treatment plan if it's an array or string
-        let rawPlan = res.data.data.treatment_plan || "";
-        let stepsArray = Array.isArray(rawPlan) ? rawPlan : String(rawPlan).split('\n');
-        stepsArray = stepsArray.filter(s => String(s).trim().length > 0)
-                               .map(s => String(s).replace(/^[0-9]+\.\s*/, '').replace(/\*\*/g, ''));
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder("utf-8");
 
-        navigate('/result', {
-            state: {
-                preview: location.state.preview,
-                crop: res.data.data.crop,
-                disease: res.data.data.disease,
-                confidence: res.data.data.confidence_score,
-                weather: res.data.data.weather_context,
-                yieldImpact: res.data.data.yield_impact_estimate,
-                treatment: stepsArray
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          const chunkStr = decoder.decode(value, { stream: true });
+          const lines = chunkStr.split('\\n');
+
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            try {
+              const payload = JSON.parse(line);
+              
+              if (payload.type === 'init') {
+                setInitData(payload.data);
+                setView('result'); // Hot-swap the UI instantly
+              } else if (payload.type === 'chunk') {
+                setStreamedText(prev => prev + payload.text);
+              }
+            } catch (err) {
+              console.error("NDJSON Parse error on line:", line, err);
             }
-        });
+          }
+        }
       } catch (err) {
-        alert("Analysis failed: " + err.message);
+        alert("Analysis failed to connect: " + err.message);
         navigate('/');
       }
     };
 
     performAnalysis();
   }, [location, navigate]);
+
+  if (view === 'result' && initData) {
+     const unifiedData = {
+         crop: initData.crop,
+         disease: initData.disease,
+         confidence: initData.confidence_score,
+         weather: initData.weather_context,
+         preview: location.state.preview,
+         treatmentRaw: streamedText
+     };
+     // Render ResultPage directly via props to maintain React memory stream state natively
+     return <ResultPage presetData={unifiedData} onNewScan={() => navigate('/')} />;
+  }
 
   return (
     <div className="bg-surface font-body text-on-surface min-h-screen">

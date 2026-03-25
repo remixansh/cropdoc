@@ -12,21 +12,47 @@ export default function ResultPage({ presetData, onNewScan }) {
   // Dynamically parse the streaming markdown block from GenAI
   const rawText = data.treatmentRaw || "";
   
-  const textLines = rawText.split('\\n').map(s => s.trim()).filter(s => s.length > 0);
+  const textLines = rawText.split(/(?:\r?\n|\\n)+/).map(s => s.trim().replace(/\*\*/g, '')).filter(s => s.length > 0);
   
   let yieldImpactSentence = null;
   let stepsList = [];
   
-  textLines.forEach(line => {
-     if (!yieldImpactSentence && (line.includes('%') || line.toLowerCase().includes('yield'))) {
+  for (const line of textLines) {
+     if (line.includes('%') || line.toLowerCase().includes('yield') || line.toLowerCase().includes('loss')) {
          yieldImpactSentence = line;
+         break;
+     }
+  }
+
+  let currentStep = "";
+  
+  textLines.forEach(line => {
+     if (yieldImpactSentence && line === yieldImpactSentence) return;
+     if (line.toLowerCase().includes('here is a')) return;
+     if (line.toLowerCase().includes('treatment plan:')) return;
+     
+     const isStepHeader = /^(?:Step\s*\d+[\.\:\-]?|[\d]+[\.\:\-]|[\-\*])(?:$|\s+)/i.test(line);
+     
+     if (isStepHeader) {
+         if (currentStep) stepsList.push(currentStep.trim());
+         currentStep = line.replace(/^(?:Step\s*\d+[\.\:\-]?|[\d]+[\.\:\-]|[\-\*])\s*/i, '').trim();
      } else {
-         const cleanLine = line.replace(/^([0-9]+[\.\)\-]*|\*|\-)\s*/, '').replace(/\*\*/g, '').trim();
-         if (cleanLine.length > 5) {
-             stepsList.push(cleanLine);
+         if (currentStep) {
+             if (currentStep.length > 0 && !currentStep.match(/[:\.!\?]$/)) {
+                 currentStep += ":";
+             }
+             currentStep += " " + line;
+         } else {
+             if (line.length > 20) {
+                 currentStep = line;
+             }
          }
      }
   });
+  
+  if (currentStep) {
+     stepsList.push(currentStep.trim());
+  }
 
   return (
     <div className="bg-[#f7f5f0] text-on-surface min-h-screen">

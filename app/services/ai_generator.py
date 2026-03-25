@@ -39,6 +39,7 @@ async def generate_action_plan_stream(
     2. A 3-step organic treatment plan taking the weather into account.
     
     Format the output elegantly in plain text markdown, do not use JSON. Do not use asterisks or bolding.
+    Explain the treatment steps in extremely simple terms, as if you are advising a farmer with a 10th-grade education. Avoid complex agricultural jargon.
     """
     
     if language != "en":

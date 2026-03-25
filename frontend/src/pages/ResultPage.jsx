@@ -12,14 +12,21 @@ export default function ResultPage({ presetData, onNewScan }) {
   // Dynamically parse the streaming markdown block from GenAI
   const rawText = data.treatmentRaw || "";
   
-  // Look for any line containing % to identify the Yield sentence (e.g. "Potential 20-30% loss")
-  const textLines = rawText.split('\\n');
-  const yieldImpactSentence = textLines.find(line => line.includes('%') || line.toLowerCase().includes('yield'));
+  const textLines = rawText.split('\\n').map(s => s.trim()).filter(s => s.length > 0);
   
-  // Extract Steps (e.g., "1. ...", "2. ...")
-  const stepsList = textLines
-      .filter(line => line.match(/^\d+\./))
-      .map(line => line.replace(/^\d+\.\s*/, '').replace(/\*\*/g, ''));
+  let yieldImpactSentence = null;
+  let stepsList = [];
+  
+  textLines.forEach(line => {
+     if (!yieldImpactSentence && (line.includes('%') || line.toLowerCase().includes('yield'))) {
+         yieldImpactSentence = line;
+     } else {
+         const cleanLine = line.replace(/^([0-9]+[\.\)\-]*|\*|\-)\s*/, '').replace(/\*\*/g, '').trim();
+         if (cleanLine.length > 5) {
+             stepsList.push(cleanLine);
+         }
+     }
+  });
 
   return (
     <div className="bg-[#f7f5f0] text-on-surface min-h-screen">

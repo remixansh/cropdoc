@@ -46,7 +46,7 @@ export default function AnalyzingPage() {
 
         let localInitData = null;
         let localStreamedText = "";
-
+        let buffer = '';
         while (true) {
           const { value, done } = await reader.read();
           if (done) {
@@ -64,8 +64,12 @@ export default function AnalyzingPage() {
             break;
           }
 
-          const chunkStr = decoder.decode(value, { stream: true });
-          const lines = chunkStr.split('\\n');
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\\n');
+          
+          // The last element is either an empty string (if buffer ended with \n) 
+          // or an incomplete chunk. Save it back to buffer.
+          buffer = lines.pop();
 
           for (const line of lines) {
             if (!line.trim()) continue;

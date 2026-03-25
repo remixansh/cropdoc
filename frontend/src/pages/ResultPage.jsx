@@ -16,18 +16,17 @@ export default function ResultPage({ presetData, onNewScan }) {
   const textLines = rawText.split('\\n').map(s => s.trim()).filter(s => s.length > 0);
   
   let yieldImpactSentence = null;
-  let stepsList = [];
+  let treatmentContent = [];
   
   textLines.forEach(line => {
-     if (!yieldImpactSentence && (line.includes('%') || line.toLowerCase().includes('yield'))) {
+     if (!yieldImpactSentence && (line.includes('%') || line.toLowerCase().includes('yield') || line.toLowerCase().includes('loss') || line.toLowerCase().includes('impact'))) {
          yieldImpactSentence = line;
      } else {
-         const cleanLine = line.replace(/^([0-9]+[\.\)\-]*|\*|\-)\s*/, '').trim();
-         if (cleanLine.length > 5) {
-             stepsList.push(cleanLine);
-         }
+         treatmentContent.push(line);
      }
   });
+
+  const markdownText = treatmentContent.join('\\n');
 
   return (
     <div className="bg-[#f7f5f0] text-on-surface min-h-screen">
@@ -73,27 +72,31 @@ export default function ResultPage({ presetData, onNewScan }) {
           <section className="bg-surface-container-lowest rounded-[14px] border-[0.5px] border-outline-variant overflow-hidden bg-white shadow-sm flex-1">
             <div className="p-4 md:p-6 h-full flex flex-col">
               <h3 className="text-[13px] md:text-[15px] font-bold text-[#1A1A1A] mb-5">Recommended actions</h3>
-              <div className="space-y-5 flex-1">
-                {stepsList.length > 0 ? stepsList.map((step, idx) => (
-                    <div key={idx} className="flex gap-4 items-start animate-fade-in transition-all">
-                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#2d6a4f]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-[12px] md:text-[14px] font-bold text-[#2d6a4f]">{idx + 1}</span>
-                    </div>
-                    <div className="text-[14px] md:text-[15px] text-on-surface-variant pt-0.5 leading-relaxed w-full">
-                        <ReactMarkdown 
-                            components={{
-                                p: ({node, ...props}) => <span {...props} />,
-                                strong: ({node, ...props}) => <strong className="font-semibold text-gray-900" {...props} />,
-                                a: ({node, ...props}) => <a className="text-[#2d6a4f] underline underline-offset-2" {...props} />,
-                                em: ({node, ...props}) => <em className="italic text-gray-800" {...props} />,
-                                code: ({node, ...props}) => <code className="bg-gray-100 rounded px-1.5 py-0.5 text-[0.9em] font-mono text-[#d05c2a]" {...props} />
-                            }}
-                        >
-                            {step}
-                        </ReactMarkdown>
-                    </div>
-                    </div>
-                )) : (
+              <div className="flex-1 overflow-auto pr-2 pb-2">
+                {markdownText.trim().length > 0 ? (
+                  <div className="prose-custom w-full">
+                    <ReactMarkdown 
+                        components={{
+                            p: ({node, ...props}) => <p className="text-[14px] md:text-[15px] text-on-surface-variant leading-relaxed mb-4" {...props} />,
+                            ul: ({node, ...props}) => <ul className="list-disc pl-5 space-y-3 mb-5 text-[#2d6a4f]" {...props} />,
+                            ol: ({node, ...props}) => <ol className="list-decimal pl-5 space-y-3 mb-5 text-[#2d6a4f] marker:font-bold" {...props} />,
+                            li: ({node, ...props}) => (
+                                <li className="pl-1">
+                                    <span className="text-[14px] md:text-[15px] text-on-surface-variant leading-relaxed">{props.children}</span>
+                                </li>
+                            ),
+                            h3: ({node, ...props}) => <h3 className="text-[16px] md:text-[18px] font-bold text-[#1A1A1A] mt-6 mb-3" {...props} />,
+                            h4: ({node, ...props}) => <h4 className="text-[15px] md:text-[16px] font-bold text-[#1A1A1A] mt-4 mb-2" {...props} />,
+                            strong: ({node, ...props}) => <strong className="font-semibold text-gray-900" {...props} />,
+                            a: ({node, ...props}) => <a className="text-[#2d6a4f] underline underline-offset-2 hover:text-[#1b4332] transition-colors" {...props} />,
+                            em: ({node, ...props}) => <em className="italic text-gray-800" {...props} />,
+                            code: ({node, ...props}) => <code className="bg-gray-100 rounded px-1.5 py-0.5 text-[0.9em] font-mono text-[#d05c2a]" {...props} />
+                        }}
+                    >
+                        {markdownText}
+                    </ReactMarkdown>
+                  </div>
+                ) : (
                     <div className="flex gap-4 items-center h-full justify-center opacity-60">
                       <div className="w-3 h-3 rounded-full bg-primary animate-pulse-custom"></div>
                       <p className="text-[14px] md:text-[15px] text-on-surface-variant italic font-medium">Generating treatment plan...</p>
@@ -101,7 +104,7 @@ export default function ResultPage({ presetData, onNewScan }) {
                 )}
               </div>
 
-              {stepsList.length > 0 && (
+              {markdownText.trim().length > 0 && (
                 <div className="bg-[#FDF0E6] rounded-xl p-4 mt-8">
                   <p className="text-[9px] md:text-[10px] font-bold text-[#7A6010] tracking-[0.1em] mb-1.5 uppercase">AI ADVISORY</p>
                   <p className="text-[10px] md:text-[12px] text-[#7A6010] leading-relaxed">These treatment steps were generated organically based on hyper-local weather datasets and 38-class MobileNet diagnostics.</p>

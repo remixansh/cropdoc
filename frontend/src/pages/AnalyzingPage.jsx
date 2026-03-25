@@ -61,9 +61,11 @@ export default function AnalyzingPage() {
 
             if (payload.type === 'init' && payload.data) {
               didReceiveInit = true;
+              localInitData = payload.data;
               setInitData(payload.data);
               setView('result'); // Hot-swap the UI instantly
             } else if (payload.type === 'chunk' && typeof payload.text === 'string') {
+              localStreamedText += payload.text;
               setStreamedText(prev => prev + payload.text);
             }
           } catch (err) {
@@ -107,24 +109,6 @@ export default function AnalyzingPage() {
           flushBuffer(false);
         }
 
-          for (const line of lines) {
-            if (!line.trim()) continue;
-            try {
-              const payload = JSON.parse(line);
-              
-              if (payload.type === 'init') {
-                localInitData = payload.data;
-                setInitData(payload.data);
-                setView('result'); // Hot-swap the UI instantly
-              } else if (payload.type === 'chunk') {
-                localStreamedText += payload.text;
-                setStreamedText(prev => prev + payload.text);
-              }
-            } catch (err) {
-              console.error("NDJSON Parse error on line:", line, err);
-            }
-          }
-        }
       } catch (err) {
         if (err.name === 'AbortError') return;
         alert("Analysis failed to connect: " + err.message);
@@ -214,7 +198,6 @@ export default function AnalyzingPage() {
               "Early detection of fungal spotting can prevent up to 85% of crop loss if treated within the first 48 hours."
             </p>
           </div>
-        </div>
         </div>
       </main>
 

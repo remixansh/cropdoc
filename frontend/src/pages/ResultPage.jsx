@@ -21,30 +21,10 @@ export default function ResultPage({ presetData, onNewScan }) {
   textLines.forEach(line => {
      if (!yieldImpactSentence && (line.includes('%') || line.toLowerCase().includes('yield') || line.toLowerCase().includes('loss') || line.toLowerCase().includes('impact'))) {
          yieldImpactSentence = line;
-         break;
-     }
-  }
-
-  let currentStep = "";
-  
-  textLines.forEach(line => {
-     if (yieldImpactSentence && line === yieldImpactSentence) return;
-     if (line.toLowerCase().includes('here is a')) return;
-     if (line.toLowerCase().includes('treatment plan:')) return;
-     
-     const isStepHeader = /^(?:Step\s*\d+[\.\:\-]?|[\d]+[\.\:\-]|[\-\*])(?:$|\s+)/i.test(line);
-     
-     if (isStepHeader) {
-         if (currentStep) stepsList.push(currentStep.trim());
-         currentStep = line.replace(/^(?:Step\s*\d+[\.\:\-]?|[\d]+[\.\:\-]|[\-\*])\s*/i, '').trim();
      } else {
          treatmentContent.push(line);
      }
   });
-  
-  if (currentStep) {
-     stepsList.push(currentStep.trim());
-  }
 
   const markdownText = treatmentContent.join('\\n');
 

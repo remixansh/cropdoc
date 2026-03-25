@@ -130,15 +130,15 @@ export default function AnalyzingPage() {
 
   return (
     <div className="bg-surface font-body text-on-surface min-h-screen">
-      <header className="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-14 max-w-md mx-auto bg-[#fbf9f4] dark:bg-[#1b1c19] border-none">
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 md:px-8 h-14 max-w-md md:max-w-5xl mx-auto bg-[#fbf9f4] dark:bg-[#1b1c19] border-none">
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-[#0f5238] dark:text-[#b1f0ce]" style={{fontVariationSettings: "'FILL' 1"}}>eco</span>
           <h1 className="font-serif font-bold text-[17px] tracking-tight text-[#0f5238] dark:text-[#b1f0ce]">CropDoc</h1>
         </div>
       </header>
 
-      <main className="pt-14 pb-24 min-h-screen max-w-md mx-auto px-4 bg-surface flex flex-col gap-8">
-        <section className="mt-8">
+      <main className="pt-14 pb-24 min-h-screen max-w-md md:max-w-5xl mx-auto px-4 bg-surface flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 md:items-start md:pt-24">
+        {/* Left Col */}<div className="flex flex-col gap-8 md:sticky md:top-24"><section className="mt-8 md:mt-0">
           <span className="font-label text-[10px] font-medium uppercase tracking-[0.05em] text-outline mb-1 block">Diagnostics in progress</span>
           <h2 className="font-headline text-3xl font-bold text-on-surface leading-tight">Analyzing Specimen</h2>
         </section>
@@ -146,10 +146,10 @@ export default function AnalyzingPage() {
         <div className="relative w-full h-40 rounded-xl overflow-hidden bg-surface-container-low">
           <img src={location.state?.preview || "https://lh3.googleusercontent.com/aida-public/AB6AXuChExXC3dkmjeDnyHovwqz-HUWLG6JzyQ-eUPz7X0v-ae41B5UIlAbP5g6Ebj2aOX9PvILI_PAQD7Ict2p4FE2IJ4DMiHRMiOr7Ox6Y78H128m3gl4bym8z0DWZNV19m4wg11leCPQBycYT2XtVKM5syyu6q-9xaxgJI1W50YtxGd7iJghS96OTUiyDyvXhzBe2IZvaWURhuZtmlDJCOKMvAjHdTKU1u7O0tV4Rs_lwVyGNFguKHj0N2Trl8mOGlvObmtKS7bGDnN9t"} className="w-full h-full object-cover grayscale opacity-40 blur-[2px]" alt="Scan" />
           <div className="absolute inset-0 bg-surface/60 backdrop-blur-sm"></div>
-          <div className="absolute w-full h-[2px] bg-[#52B788] shadow-[0_0_12px_rgba(82,183,136,0.8)] z-10 animate-scan"></div>
+          <div className="absolute w-full h-[2px] bg-[#52B788] shadow-[0_0_12px_rgba(82,183,136,0.8)] z-10 animate-scan"></div></div>
         </div>
 
-        <section className="bg-surface-container-low p-6 rounded-xl flex flex-col gap-6">
+        {/* Right Col */}<div className="flex flex-col gap-8"><section className="bg-surface-container-low p-6 rounded-xl flex flex-col gap-6">
           <div className={`flex items-start gap-4 ${step > 1 ? 'opacity-100' : 'opacity-100'}`}>
             <div className="mt-1 flex-shrink-0">
               <div className={`w-3 h-3 rounded-full ${step > 1 ? 'bg-primary ring-4 ring-primary-fixed/30' : 'bg-primary animate-pulse-custom'}`}></div>
@@ -190,9 +190,10 @@ export default function AnalyzingPage() {
             "Early detection of fungal spotting can prevent up to 85% of crop loss if treated within the first 48 hours."
           </p>
         </div>
+        </div>
       </main>
 
-      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md mx-auto bg-[#fbf9f4]/85 dark:bg-[#1b1c19]/85 backdrop-blur-md border-t border-[#bfc9c1]/15 rounded-t-2xl">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md md:max-w-sm md:rounded-full md:bottom-8 md:border md:shadow-lg md:px-6 md:pb-2 mx-auto bg-[#fbf9f4]/85 dark:bg-[#1b1c19]/85 backdrop-blur-md border-t border-[#bfc9c1]/15 rounded-t-2xl">
         <button className="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all"><span className="material-symbols-outlined">home</span></button>
         <button className="flex flex-col items-center justify-center bg-[#2d6a4f] text-white rounded-xl p-3 active:scale-90 transition-transform duration-200"><span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>camera_alt</span></button>
         <button className="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all"><span className="material-symbols-outlined">person</span></button>

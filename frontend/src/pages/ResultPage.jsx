@@ -56,7 +56,7 @@ export default function ResultPage({ presetData, onNewScan }) {
 
   return (
     <div className="bg-[#f7f5f0] text-on-surface min-h-screen">
-      <header className="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-14 max-w-md mx-auto bg-[#fbf9f4] dark:bg-[#1b1c19]">
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 md:px-8 h-14 max-w-md md:max-w-5xl mx-auto bg-[#fbf9f4] dark:bg-[#1b1c19]">
         <div className="flex items-center gap-3">
           <button onClick={onNewScan || (() => navigate('/'))} className="hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-colors p-2 rounded-full">
             <span className="material-symbols-outlined text-[#0f5238] dark:text-[#b1f0ce]">arrow_back</span>
@@ -65,7 +65,9 @@ export default function ResultPage({ presetData, onNewScan }) {
         </div>
       </header>
 
-      <main className="max-w-md mx-auto pt-20 pb-28 px-4 space-y-6">
+      <main className="max-w-md md:max-w-5xl mx-auto pt-20 pb-28 px-4 space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-8 md:items-start">
+        {/* Left Column */}
+        <div className="flex flex-col gap-6 md:sticky md:top-24">
         <section className="bg-surface-container-lowest rounded-[14px] border-[0.5px] border-outline-variant overflow-hidden shadow-sm border-l-[3px] border-l-[#52B788]">
           <div className="p-4 bg-white">
             <p className="text-[9px] font-label font-bold tracking-[0.05em] text-[#6B6560] mb-1">CROP DETECTED</p>
@@ -94,7 +96,10 @@ export default function ResultPage({ presetData, onNewScan }) {
               <p className="text-[12px] font-medium text-[#7A3D10]">{yieldImpactSentence.replace(/\*/g, '')}</p>
             </section>
         )}
+        </div>
 
+        {/* Right Column */}
+        <div className="flex flex-col gap-6">
         <section className="bg-surface-container-lowest rounded-[14px] border-[0.5px] border-outline-variant overflow-hidden bg-white shadow-sm">
           <div className="p-4">
             <h3 className="text-[13px] font-medium text-[#1A1A1A] mb-4">Recommended actions</h3>
@@ -125,9 +130,10 @@ export default function ResultPage({ presetData, onNewScan }) {
           <span className="material-symbols-outlined text-[20px]">photo_camera</span>
           Scan another plant
         </button>
+        </div>
       </main>
 
-      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md mx-auto bg-[#fbf9f4]/85 dark:bg-[#1b1c19]/85 backdrop-blur-md rounded-t-2xl border-t border-[#bfc9c1]/15">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md md:max-w-sm md:rounded-full md:bottom-8 md:border md:shadow-lg md:px-6 md:pb-2 mx-auto bg-[#fbf9f4]/85 dark:bg-[#1b1c19]/85 backdrop-blur-md rounded-t-2xl border-t border-[#bfc9c1]/15">
         <button className="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all"><span className="material-symbols-outlined">home</span></button>
         <button className="flex flex-col items-center justify-center bg-[#2d6a4f] text-white rounded-xl p-3 active:scale-90 transition-transform duration-200"><span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>camera_alt</span></button>
         <button className="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all"><span className="material-symbols-outlined">person</span></button>

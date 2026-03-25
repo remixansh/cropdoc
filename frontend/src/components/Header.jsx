@@ -4,7 +4,7 @@ export default function Header({ showBack = false, title = "CropDoc" }) {
   const navigate = useNavigate();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 h-14 max-w-md mx-auto bg-surface">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 md:px-8 h-14 max-w-md md:max-w-5xl mx-auto bg-surface">
       <div className="flex items-center gap-2">
         {showBack && (
           <button

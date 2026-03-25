@@ -47,3 +47,4 @@ Dive deeper into our system architecture and specific implementations:
 - [Frontend Documentation](https://github.com/remixansh/cropdoc/blob/main/frontend.md)
 - [Leaf/ML Documentation](https://github.com/remixansh/cropdoc/blob/main/leaf.md)
 - [System Overview](https://github.com/remixansh/cropdoc/blob/main/overview.md)
+- [Sample Input](https://github.com/remixansh/cropdoc/tree/main/sample)

@@ -1,0 +1,19 @@
+# Excluded by User Request
+app/static/
+.env
+
+# Environments
+venv/
+env/
+
+# PyCache
+__pycache__/
+*.py[cod]
+
+# IDE Settings
+.vscode/
+
+# Build and Model Files (Too large for Git)
+*.h5
+*.keras
+*.tflite

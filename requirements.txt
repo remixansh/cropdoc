@@ -1,10 +1,11 @@
-fastapi
+fastapi==0.135.2
 uvicorn
 httpx
 Pillow
 numpy<2.0.0
 tensorflow==2.13.1
 google-generativeai
-pydantic-settings
+pydantic==2.12.5
+pydantic-settings==2.13.1
 python-multipart
 python-dotenv

@@ -16,17 +16,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount static files correctly
-static_dir = os.path.join(os.path.dirname(__file__), "static")
-os.makedirs(static_dir, exist_ok=True)
-app.mount("/static", StaticFiles(directory=static_dir), name="static")
+# Since the frontend is now a standalone React App (e.g., via Vite),
+# the FastAPI backend acts strictly as an API server.
+# Ensure you run the React frontend separately (e.g., `npm run dev`)
+# while this server handles `/api/...` endpoints.
 
 app.include_router(api_router, prefix="/api")
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    index_path = os.path.join(static_dir, "index.html")
-    if os.path.exists(index_path):
-        with open(index_path, "r", encoding="utf-8") as f:
-            return f.read()
-    return "<h1>CropDoc API is running. GUI is missing.</h1>"
+# The root endpoint for serving the frontend (e.g., index.html) is removed
+# because the frontend is now a separate application.

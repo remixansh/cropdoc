@@ -30,8 +30,10 @@ export default function AnalyzingPage() {
         formData.append('farm_size', location.state.farmSize);
         formData.append('language', 'en'); // Default
 
+        // Use environment variable for backend URL or fallback to localhost
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
         // Native fetch for stream consumption
-        const res = await fetch('http://127.0.0.1:8000/api/predict', {
+        const res = await fetch(`${apiUrl}/api/predict`, {
           method: 'POST',
           body: formData
         });

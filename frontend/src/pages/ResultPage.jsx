@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 export default function ResultPage({ presetData, onNewScan }) {
   const location = useLocation();
@@ -21,7 +22,7 @@ export default function ResultPage({ presetData, onNewScan }) {
      if (!yieldImpactSentence && (line.includes('%') || line.toLowerCase().includes('yield'))) {
          yieldImpactSentence = line;
      } else {
-         const cleanLine = line.replace(/^([0-9]+[\.\)\-]*|\*|\-)\s*/, '').replace(/\*\*/g, '').trim();
+         const cleanLine = line.replace(/^([0-9]+[\.\)\-]*|\*|\-)\s*/, '').trim();
          if (cleanLine.length > 5) {
              stepsList.push(cleanLine);
          }
@@ -75,10 +76,22 @@ export default function ResultPage({ presetData, onNewScan }) {
               <div className="space-y-5 flex-1">
                 {stepsList.length > 0 ? stepsList.map((step, idx) => (
                     <div key={idx} className="flex gap-4 items-start animate-fade-in transition-all">
-                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#2d6a4f]/10 flex items-center justify-center flex-shrink-0">
+                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#2d6a4f]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <span className="text-[12px] md:text-[14px] font-bold text-[#2d6a4f]">{idx + 1}</span>
                     </div>
-                    <p className="text-[14px] md:text-[15px] text-on-surface-variant pt-0.5 leading-relaxed">{step}</p>
+                    <div className="text-[14px] md:text-[15px] text-on-surface-variant pt-0.5 leading-relaxed w-full">
+                        <ReactMarkdown 
+                            components={{
+                                p: ({node, ...props}) => <span {...props} />,
+                                strong: ({node, ...props}) => <strong className="font-semibold text-gray-900" {...props} />,
+                                a: ({node, ...props}) => <a className="text-[#2d6a4f] underline underline-offset-2" {...props} />,
+                                em: ({node, ...props}) => <em className="italic text-gray-800" {...props} />,
+                                code: ({node, ...props}) => <code className="bg-gray-100 rounded px-1.5 py-0.5 text-[0.9em] font-mono text-[#d05c2a]" {...props} />
+                            }}
+                        >
+                            {step}
+                        </ReactMarkdown>
+                    </div>
                     </div>
                 )) : (
                     <div className="flex gap-4 items-center h-full justify-center opacity-60">

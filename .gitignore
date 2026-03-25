@@ -17,3 +17,7 @@ __pycache__/
 *.h5
 *.keras
 *.tflite
+
+backend/sample
+backend/.env
+frontend/.env

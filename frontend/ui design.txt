@@ -1,0 +1,528 @@
+// main page - landing page
+
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-container": "#2d6a4f",
+              "on-primary": "#ffffff",
+              "error-container": "#ffdad6",
+              "secondary-fixed-dim": "#75daa8",
+              "primary-fixed": "#b1f0ce",
+              "tertiary-fixed-dim": "#ffb68c",
+              "on-tertiary-container": "#ffd0b7",
+              "inverse-primary": "#95d4b3",
+              "surface-container": "#f0eee9",
+              "on-background": "#1b1c19",
+              "on-primary-container": "#a8e7c5",
+              "primary-fixed-dim": "#95d4b3",
+              "primary": "#0f5238",
+              "on-secondary-fixed-variant": "#005235",
+              "on-error": "#ffffff",
+              "on-tertiary-fixed-variant": "#763400",
+              "surface-bright": "#fbf9f4",
+              "surface-dim": "#dbdad5",
+              "surface-container-highest": "#e4e2dd",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#00734d",
+              "inverse-on-surface": "#f2f1ec",
+              "surface-container-high": "#eae8e3",
+              "surface-tint": "#2c694e",
+              "on-primary-fixed-variant": "#0e5138",
+              "surface": "#fbf9f4",
+              "background": "#fbf9f4",
+              "surface-container-low": "#f5f3ee",
+              "on-tertiary": "#ffffff",
+              "error": "#ba1a1a",
+              "on-tertiary-fixed": "#321200",
+              "secondary": "#006c48",
+              "secondary-fixed": "#92f7c3",
+              "on-secondary-fixed": "#002113",
+              "outline": "#707973",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed": "#002114",
+              "on-surface-variant": "#404943",
+              "tertiary": "#773400",
+              "surface-variant": "#e4e2dd",
+              "on-surface": "#1b1c19",
+              "on-error-container": "#93000a",
+              "secondary-container": "#92f7c3",
+              "outline-variant": "#bfc9c1",
+              "inverse-surface": "#30312e",
+              "tertiary-container": "#9b4702",
+              "tertiary-fixed": "#ffdbc9"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        background-color: #f7f5f0;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-14 max-w-md mx-auto bg-[#fbf9f4] dark:bg-[#1b1c19]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#0f5238] dark:text-[#b1f0ce]" data-icon="eco">eco</span>
+<h1 class="font-headline font-bold text-[17px] tracking-tight text-[#0f5238] dark:text-[#b1f0ce]">CropDoc</h1>
+</div>
+<div class="text-[#0f5238] dark:text-[#b1f0ce] font-headline font-bold text-[17px] tracking-tight">
+            EN | HI
+        </div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 pb-24 px-4 max-w-md mx-auto min-h-screen flex flex-col">
+<!-- Hero Image Segment (Editorial Touch) -->
+<div class="mb-8 overflow-hidden rounded-xl h-48 w-full relative">
+<img alt="Macro view of a vibrant green plant leaf showing intricate vein details in soft natural morning sunlight" class="w-full h-full object-cover" data-alt="Macro view of a vibrant green plant leaf showing intricate vein details in soft natural morning sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ2xix83actB1HNhbX1Rg5-929jxbrFfoBZCEvSxuzYPoeSjOWJa7VWBC-6IPYbryuSNfsCj1rCexp4UvjDD_3hAzy-dhrGf2YqrDTpZuiT2d3wO51v9mpeEXpGwPAE9QuMw8LgsGJoiLiB0ojAdlAKD4o7cznSLip0sLHy8cLiGPUSnO0UVN4eMqYvF1eDXJUa9Fk5dvRP4_7QoSz4C6l_dURqkw_BnlRtVg5ux5xojf4FjKB8EzqLFEg7wuP_usrPqIBYZd9CS0G"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
+</div>
+<!-- Headline & Eyebrow Section -->
+<div class="mb-6">
+<span class="font-label text-[10px] uppercase tracking-[0.15em] text-outline mb-1 block">Plant Diagnostics</span>
+<h2 class="font-headline text-3xl font-medium text-on-surface leading-tight">Identify health issues instantly.</h2>
+</div>
+<!-- Upload Zone -->
+<div class="mb-6">
+<div class="w-full min-h-[220px] rounded-xl border-[1.5px] border-dashed border-[#52B788] bg-[#2D6A4F]/[0.04] flex flex-col items-center justify-center p-6 text-center cursor-pointer transition-colors hover:bg-[#2D6A4F]/[0.08]">
+<span class="material-symbols-outlined text-[#2D6A4F] text-4xl mb-3" data-icon="potted_plant">potted_plant</span>
+<p class="font-body font-semibold text-on-surface text-[15px] mb-1">Tap to photograph a leaf</p>
+<p class="font-body text-outline text-[13px]">or drag and drop an image</p>
+</div>
+</div>
+<!-- Input Section -->
+<div class="mb-8">
+<label class="font-label text-[11px] uppercase tracking-wider text-outline mb-2 block" for="farm-size">Farm size (acres)</label>
+<input class="w-full bg-surface-container-lowest border border-[#E4E0D8] rounded-lg px-4 py-3 text-on-surface focus:ring-0 focus:border-primary transition-all font-body text-[15px] outline-none" id="farm-size" placeholder="e.g. 2.5" type="number"/>
+</div>
+<!-- Primary Action -->
+<div class="mt-auto">
+<button class="w-full h-[52px] bg-[#2D6A4F] text-white font-body font-medium text-[13px] rounded-[12px] flex items-center justify-center gap-2 hover:opacity-95 active:scale-[0.98] transition-all">
+                Analyze Plant
+                <span class="material-symbols-outlined text-[18px]" data-icon="analytics">analytics</span>
+</button>
+<!-- Footer Branding -->
+<footer class="mt-6 pb-6 text-center">
+<p class="font-body text-[9px] text-[#6B6560] tracking-wide">
+                    No data stored. Analysis runs on device + AI.
+                </p>
+</footer>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Contextual Check: Rendered as this is the Home/Upload destination) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md mx-auto bg-[#fbf9f4]/85 dark:bg-[#1b1c19]/85 backdrop-blur-md border-t border-[#bfc9c1]/15 rounded-t-2xl">
+<button class="flex flex-col items-center justify-center bg-[#2d6a4f] text-white rounded-xl p-3">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all">
+<span class="material-symbols-outlined" data-icon="camera_alt">camera_alt</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</nav>
+</body></html>
+
+// analyzing page
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CropDoc - Analyzing</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-container": "#2d6a4f",
+              "on-primary": "#ffffff",
+              "error-container": "#ffdad6",
+              "secondary-fixed-dim": "#75daa8",
+              "primary-fixed": "#b1f0ce",
+              "tertiary-fixed-dim": "#ffb68c",
+              "on-tertiary-container": "#ffd0b7",
+              "inverse-primary": "#95d4b3",
+              "surface-container": "#f0eee9",
+              "on-background": "#1b1c19",
+              "on-primary-container": "#a8e7c5",
+              "primary-fixed-dim": "#95d4b3",
+              "primary": "#0f5238",
+              "on-secondary-fixed-variant": "#005235",
+              "on-error": "#ffffff",
+              "on-tertiary-fixed-variant": "#763400",
+              "surface-bright": "#fbf9f4",
+              "surface-dim": "#dbdad5",
+              "surface-container-highest": "#e4e2dd",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#00734d",
+              "inverse-on-surface": "#f2f1ec",
+              "surface-container-high": "#eae8e3",
+              "surface-tint": "#2c694e",
+              "on-primary-fixed-variant": "#0e5138",
+              "surface": "#fbf9f4",
+              "background": "#fbf9f4",
+              "surface-container-low": "#f5f3ee",
+              "on-tertiary": "#ffffff",
+              "error": "#ba1a1a",
+              "on-tertiary-fixed": "#321200",
+              "secondary": "#006c48",
+              "secondary-fixed": "#92f7c3",
+              "on-secondary-fixed": "#002113",
+              "outline": "#707973",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed": "#002114",
+              "on-surface-variant": "#404943",
+              "tertiary": "#773400",
+              "surface-variant": "#e4e2dd",
+              "on-surface": "#1b1c19",
+              "on-error-container": "#93000a",
+              "secondary-container": "#92f7c3",
+              "outline-variant": "#bfc9c1",
+              "inverse-surface": "#30312e",
+              "tertiary-container": "#9b4702",
+              "tertiary-fixed": "#ffdbc9"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .blur-overlay {
+        backdrop-filter: blur(8px);
+        background-color: rgba(251, 249, 244, 0.6);
+      }
+      @keyframes scan {
+        0% { top: 0%; }
+        100% { top: 100%; }
+      }
+      .animate-scan {
+        animation: scan 2s linear infinite alternate;
+      }
+      @keyframes pulse-custom {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(1.2); }
+      }
+      .animate-pulse-custom {
+        animation: pulse-custom 1.5s ease-in-out infinite;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed-variant">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-14 max-w-md mx-auto bg-[#fbf9f4] dark:bg-[#1b1c19] border-none">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#0f5238] dark:text-[#b1f0ce]">eco</span>
+<h1 class="font-serif font-bold text-[17px] tracking-tight text-[#0f5238] dark:text-[#b1f0ce]">CropDoc</h1>
+</div>
+<button class="text-[#0f5238] dark:text-[#b1f0ce] font-bold font-serif text-[14px] hover:bg-[#f0eee9] dark:hover:bg-[#32332e] px-3 py-1 rounded-lg transition-colors">
+            EN | HI
+        </button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-14 pb-24 min-h-screen max-w-md mx-auto px-4 bg-surface flex flex-col gap-8">
+<!-- Editorial Header Section -->
+<section class="mt-8">
+<span class="font-label text-[10px] font-medium uppercase tracking-[0.05em] text-outline mb-1 block">Diagnostics in progress</span>
+<h2 class="font-headline text-3xl font-bold text-on-surface leading-tight">Analyzing Specimen</h2>
+</section>
+<!-- Image Preview With Scan Line -->
+<div class="relative w-full h-40 rounded-xl overflow-hidden bg-surface-container-low">
+<img class="w-full h-full object-cover grayscale opacity-40 blur-[2px]" data-alt="close-up of a vibrant green leaf with intricate vein patterns under soft natural sunlight, macro photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChExXC3dkmjeDnyHovwqz-HUWLG6JzyQ-eUPz7X0v-ae41B5UIlAbP5g6Ebj2aOX9PvILI_PAQD7Ict2p4FE2IJ4DMiHRMiOr7Ox6Y78H128m3gl4bym8z0DWZNV19m4wg11leCPQBycYT2XtVKM5syyu6q-9xaxgJI1W50YtxGd7iJghS96OTUiyDyvXhzBe2IZvaWURhuZtmlDJCOKMvAjHdTKU1u7O0tV4Rs_lwVyGNFguKHj0N2Trl8mOGlvObmtKS7bGDnN9t"/>
+<!-- Blur Overlay for specific "Blurred at 60% opacity" requirement -->
+<div class="absolute inset-0 bg-surface/60 backdrop-blur-sm"></div>
+<!-- Scanning Line -->
+<div class="absolute w-full h-[2px] bg-[#52B788] shadow-[0_0_12px_rgba(82,183,136,0.8)] z-10 animate-scan"></div>
+</div>
+<!-- Status List with Tonal Layering -->
+<section class="bg-surface-container-low p-6 rounded-xl flex flex-col gap-6">
+<!-- Step 1: Completed -->
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0">
+<div class="w-3 h-3 rounded-full bg-primary ring-4 ring-primary-fixed/30"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[13px] font-semibold text-primary">Completed</span>
+<p class="text-[16px] font-medium text-on-surface">Identifying disease pattern</p>
+</div>
+</div>
+<!-- Step 2: Active -->
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0">
+<div class="w-3 h-3 rounded-full bg-primary animate-pulse-custom"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[13px] font-semibold text-primary">Processing</span>
+<p class="text-[16px] font-medium text-on-surface">Checking local weather</p>
+</div>
+</div>
+<!-- Step 3: Waiting -->
+<div class="flex items-start gap-4 opacity-50">
+<div class="mt-1 flex-shrink-0">
+<div class="w-3 h-3 rounded-full border-2 border-outline"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[13px] font-semibold text-outline">Queued</span>
+<p class="text-[16px] font-medium text-on-surface">Consulting AI agronomist</p>
+</div>
+</div>
+</section>
+<!-- Informational Card (Field Journal Style) -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/15">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">info</span>
+<span class="font-label text-[11px] font-bold uppercase tracking-wider text-outline">Journal Note</span>
+</div>
+<p class="text-on-surface-variant text-[14px] leading-relaxed italic font-serif">
+                "Early detection of fungal spotting can prevent up to 85% of crop loss if treated within the first 48 hours."
+            </p>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md mx-auto bg-[#fbf9f4]/85 dark:bg-[#1b1c19]/85 backdrop-blur-md border-t border-[#bfc9c1]/15 rounded-t-2xl">
+<button class="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-[#2d6a4f] text-white rounded-xl p-3 Active: scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">camera_alt</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all">
+<span class="material-symbols-outlined">person</span>
+</button>
+</nav>
+</body></html>
+
+// result page
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-container": "#2d6a4f",
+              "on-primary": "#ffffff",
+              "error-container": "#ffdad6",
+              "secondary-fixed-dim": "#75daa8",
+              "primary-fixed": "#b1f0ce",
+              "tertiary-fixed-dim": "#ffb68c",
+              "on-tertiary-container": "#ffd0b7",
+              "inverse-primary": "#95d4b3",
+              "surface-container": "#f0eee9",
+              "on-background": "#1b1c19",
+              "on-primary-container": "#a8e7c5",
+              "primary-fixed-dim": "#95d4b3",
+              "primary": "#0f5238",
+              "on-secondary-fixed-variant": "#005235",
+              "on-error": "#ffffff",
+              "on-tertiary-fixed-variant": "#763400",
+              "surface-bright": "#fbf9f4",
+              "surface-dim": "#dbdad5",
+              "surface-container-highest": "#e4e2dd",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#00734d",
+              "inverse-on-surface": "#f2f1ec",
+              "surface-container-high": "#eae8e3",
+              "surface-tint": "#2c694e",
+              "on-primary-fixed-variant": "#0e5138",
+              "surface": "#fbf9f4",
+              "background": "#fbf9f4",
+              "surface-container-low": "#f5f3ee",
+              "on-tertiary": "#ffffff",
+              "error": "#ba1a1a",
+              "on-tertiary-fixed": "#321200",
+              "secondary": "#006c48",
+              "secondary-fixed": "#92f7c3",
+              "on-secondary-fixed": "#002113",
+              "outline": "#707973",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed": "#002114",
+              "on-surface-variant": "#404943",
+              "tertiary": "#773400",
+              "surface-variant": "#e4e2dd",
+              "on-surface": "#1b1c19",
+              "on-error-container": "#93000a",
+              "secondary-container": "#92f7c3",
+              "outline-variant": "#bfc9c1",
+              "inverse-surface": "#30312e",
+              "tertiary-container": "#9b4702",
+              "tertiary-fixed": "#ffdbc9"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            background-color: #f7f5f0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-14 max-w-md mx-auto bg-[#fbf9f4] dark:bg-[#1b1c19]">
+<div class="flex items-center gap-3">
+<button class="hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined text-[#0f5238] dark:text-[#b1f0ce]">arrow_back</span>
+</button>
+<h1 class="font-serif font-bold text-[17px] tracking-tight text-[#0f5238] dark:text-[#b1f0ce]">New scan</h1>
+</div>
+<div class="text-[#0f5238] dark:text-[#b1f0ce] font-bold text-[13px] tracking-widest">
+            EN | HI
+        </div>
+</header>
+<main class="max-w-md mx-auto pt-20 pb-28 px-4 space-y-6">
+<!-- Diagnosis Card -->
+<section class="bg-surface-container-lowest rounded-[14px] border-[0.5px] border-outline-variant overflow-hidden shadow-sm border-l-[3px] border-l-[#52B788]">
+<div class="p-4">
+<p class="text-[9px] font-label font-bold tracking-[0.05em] text-[#6B6560] mb-1">CROP DETECTED</p>
+<div class="flex justify-between items-start mb-4">
+<h2 class="text-[16px] font-semibold text-[#1A1A1A] leading-tight">Tomato — Early Blight</h2>
+<span class="bg-[#52B788]/10 text-primary-container px-2 py-0.5 rounded-full text-[10px] font-bold font-label">
+                        96.5% confidence
+                    </span>
+</div>
+<hr class="border-[#E4E0D8] mb-4"/>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-surface-container">
+<img alt="Tomato leaf" class="w-full h-full object-cover" data-alt="Macro close-up of a green tomato leaf with dark concentric brown spots characteristic of early blight disease fungal infection" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCq5HkZUy9THM6zCNrMG78HQoVKL7I_ib4MX-e4S8sJBr3sJXJAS43qcq1xqVUOh3Qydxs_28Fc2MJhjelcUMHLUN7oJtkl8FvYak96UAWvHUbJbers6IoXcsEspyr2Cd5lNILyPJ3VCLgkBOgZIhfb-VKJ1JprxAgDwc4TH6IRMj-Q0l9KP8VUcVcVf3m-HEmfa2f8v5hwnwLM04An7zi79TSkzPfwcgaPj53umFobAOlZZkgWD060ubmUJ-kH-LWdRTgbOMZJzfB3"/>
+</div>
+<div class="flex items-center gap-1.5 text-[#6B6560] italic text-[10px]">
+<span class="material-symbols-outlined text-[14px]">wb_sunny</span>
+<span>Sunny conditions detected</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Yield Banner -->
+<section class="bg-[#E07B39]/10 border-l-[3px] border-l-[#E07B39] p-4 rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-[#7A3D10] text-[20px]">warning</span>
+<p class="text-[12px] font-medium text-[#7A3D10]">20–30% yield loss if untreated</p>
+</section>
+<!-- Treatment Card -->
+<section class="bg-surface-container-lowest rounded-[14px] border-[0.5px] border-outline-variant overflow-hidden">
+<div class="p-4">
+<h3 class="text-[13px] font-medium text-[#1A1A1A] mb-4">Recommended actions</h3>
+<div class="space-y-4">
+<div class="flex gap-3 items-start">
+<div class="w-6 h-6 rounded-full bg-primary-container/10 flex items-center justify-center flex-shrink-0">
+<span class="text-[11px] font-bold text-primary-container">1</span>
+</div>
+<p class="text-[14px] text-on-surface-variant pt-0.5">Prune infected leaves</p>
+</div>
+<div class="flex gap-3 items-start">
+<div class="w-6 h-6 rounded-full bg-primary-container/10 flex items-center justify-center flex-shrink-0">
+<span class="text-[11px] font-bold text-primary-container">2</span>
+</div>
+<p class="text-[14px] text-on-surface-variant pt-0.5">Apply copper-based fungicide</p>
+</div>
+<!-- Weather Advisory Panel -->
+<div class="bg-[#FDF0E6] rounded-xl p-3 mt-4">
+<p class="text-[9px] font-bold text-[#7A6010] tracking-wider mb-1 uppercase">WEATHER ADVISORY</p>
+<p class="text-[10px] text-[#7A6010] leading-relaxed">Do not spray if rain is forecast within 4 hours.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Button -->
+<button class="w-full h-12 border-[1.5px] border-primary-container text-primary-container font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-primary-container/5 transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-[20px]">photo_camera</span>
+            Scan another plant
+        </button>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md mx-auto bg-[#fbf9f4]/85 dark:bg-[#1b1c19]/85 backdrop-blur-md rounded-t-2xl border-t border-[#bfc9c1]/15">
+<button class="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-[#2d6a4f] text-white rounded-xl p-3 Active: scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">camera_alt</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#2d6a4f]/70 dark:text-[#b1f0ce]/70 p-3 hover:bg-[#f0eee9] dark:hover:bg-[#32332e] transition-all">
+<span class="material-symbols-outlined">person</span>
+</button>
+</nav>
+</body></html>

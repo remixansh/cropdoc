@@ -43,12 +43,17 @@ export default function AnalyzingPage() {
         const reader = res.body.getReader();
         const decoder = new TextDecoder("utf-8");
 
+        let buffer = '';
         while (true) {
           const { value, done } = await reader.read();
           if (done) break;
 
-          const chunkStr = decoder.decode(value, { stream: true });
-          const lines = chunkStr.split('\\n');
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\\n');
+          
+          // The last element is either an empty string (if buffer ended with \n) 
+          // or an incomplete chunk. Save it back to buffer.
+          buffer = lines.pop();
 
           for (const line of lines) {
             if (!line.trim()) continue;

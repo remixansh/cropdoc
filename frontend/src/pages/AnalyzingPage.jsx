@@ -17,10 +17,13 @@ export default function AnalyzingPage() {
       return;
     }
 
+    const abortController = new AbortController();
+
     const performAnalysis = async () => {
       // Simulate UI steps parallel to stream bootstrap
       const timer1 = setTimeout(() => setStep(2), 2000);
       const timer2 = setTimeout(() => setStep(3), 5000);
+      let didReceiveInit = false;
 
       try {
         const formData = new FormData();
@@ -35,20 +38,54 @@ export default function AnalyzingPage() {
         // Native fetch for stream consumption
         const res = await fetch(`${apiUrl}/api/predict`, {
           method: 'POST',
-          body: formData
+          body: formData,
+          signal: abortController.signal
         });
 
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
-        clearTimeout(timer1);
-        clearTimeout(timer2);
-        
+        if (!res.body) throw new Error('Streaming response not available.');
+
         const reader = res.body.getReader();
         const decoder = new TextDecoder("utf-8");
 
         let localInitData = null;
         let localStreamedText = "";
         let buffer = '';
+        const processLine = (rawLine) => {
+          const line = rawLine.trim();
+          if (!line) return;
+
+          try {
+            const payload = JSON.parse(line);
+
+            if (payload.type === 'init' && payload.data) {
+              didReceiveInit = true;
+              setInitData(payload.data);
+              setView('result'); // Hot-swap the UI instantly
+            } else if (payload.type === 'chunk' && typeof payload.text === 'string') {
+              setStreamedText(prev => prev + payload.text);
+            }
+          } catch (err) {
+            console.error("NDJSON Parse error on line:", line, err);
+          }
+        };
+
+        const flushBuffer = (processRemainder = false) => {
+          // Tolerate malformed servers that separate objects with literal "\\n".
+          buffer = buffer.replace(/}\s*\\n(?=\s*{)/g, '}\n');
+          const lines = buffer.split('\n');
+          buffer = lines.pop() ?? '';
+
+          for (const line of lines) processLine(line);
+
+          if (processRemainder) {
+            const finalLine = buffer.replace(/\\n\s*$/, '').trim();
+            if (finalLine) processLine(finalLine);
+            buffer = '';
+          }
+        };
+
         while (true) {
           const { value, done } = await reader.read();
           if (done) {
@@ -67,11 +104,8 @@ export default function AnalyzingPage() {
           }
 
           buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\\n');
-          
-          // The last element is either an empty string (if buffer ended with \n) 
-          // or an incomplete chunk. Save it back to buffer.
-          buffer = lines.pop();
+          flushBuffer(false);
+        }
 
           for (const line of lines) {
             if (!line.trim()) continue;
@@ -92,12 +126,20 @@ export default function AnalyzingPage() {
           }
         }
       } catch (err) {
+        if (err.name === 'AbortError') return;
         alert("Analysis failed to connect: " + err.message);
         navigate('/');
+      } finally {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
       }
     };
 
     performAnalysis();
+
+    return () => {
+      abortController.abort();
+    };
   }, [location, navigate]);
 
   if (view === 'result' && initData) {
@@ -172,6 +214,7 @@ export default function AnalyzingPage() {
               "Early detection of fungal spotting can prevent up to 85% of crop loss if treated within the first 48 hours."
             </p>
           </div>
+        </div>
         </div>
       </main>
 

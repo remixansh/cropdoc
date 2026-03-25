@@ -35,10 +35,9 @@ async def predict(
                 "weather_context": weather_context
             }
         }
-        yield json.dumps(init_payload) + "\\n"
+        yield json.dumps(init_payload) + "\n"
         
-        # Now yield the slower, organic GenAI treatment plan dynamically in chunks
         async for chunk in generate_action_plan_stream(crop, disease, farm_size, weather_context, language):
-            yield json.dumps({"type": "chunk", "text": chunk}) + "\\n"
+            yield json.dumps({"type": "chunk", "text": chunk}) + "\n"
             
     return StreamingResponse(generate_response(), media_type="application/x-ndjson")

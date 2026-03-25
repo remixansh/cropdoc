@@ -13,7 +13,7 @@ export default function BottomNav() {
   const activeTab = pathname === "/result" || pathname === "/analyzing" ? "camera_alt" : "home";
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md mx-auto bg-surface/85 backdrop-blur-md border-t border-outline-variant/15 rounded-t-2xl">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-6 pb-6 pt-2 max-w-md md:max-w-sm md:rounded-full md:bottom-8 md:border md:shadow-lg md:px-6 md:pb-2 mx-auto bg-surface/85 backdrop-blur-md border-t border-outline-variant/15 rounded-t-2xl">
       {tabs.map((tab) => {
         const isActive =
           tab.icon === activeTab ||

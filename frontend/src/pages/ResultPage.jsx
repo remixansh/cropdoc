@@ -13,7 +13,7 @@ export default function ResultPage({ presetData, onNewScan }) {
   // Dynamically parse the streaming markdown block from GenAI
   const rawText = data.treatmentRaw || "";
   
-  const textLines = rawText.split('\\n').map(s => s.trim()).filter(s => s.length > 0);
+  const textLines = rawText.split(/(?:\r?\n|\\n)+/).map(s => s.trim().replace(/\*\*/g, '')).filter(s => s.length > 0);
   
   let yieldImpactSentence = null;
   let treatmentContent = [];
@@ -21,10 +21,30 @@ export default function ResultPage({ presetData, onNewScan }) {
   textLines.forEach(line => {
      if (!yieldImpactSentence && (line.includes('%') || line.toLowerCase().includes('yield') || line.toLowerCase().includes('loss') || line.toLowerCase().includes('impact'))) {
          yieldImpactSentence = line;
+         break;
+     }
+  }
+
+  let currentStep = "";
+  
+  textLines.forEach(line => {
+     if (yieldImpactSentence && line === yieldImpactSentence) return;
+     if (line.toLowerCase().includes('here is a')) return;
+     if (line.toLowerCase().includes('treatment plan:')) return;
+     
+     const isStepHeader = /^(?:Step\s*\d+[\.\:\-]?|[\d]+[\.\:\-]|[\-\*])(?:$|\s+)/i.test(line);
+     
+     if (isStepHeader) {
+         if (currentStep) stepsList.push(currentStep.trim());
+         currentStep = line.replace(/^(?:Step\s*\d+[\.\:\-]?|[\d]+[\.\:\-]|[\-\*])\s*/i, '').trim();
      } else {
          treatmentContent.push(line);
      }
   });
+  
+  if (currentStep) {
+     stepsList.push(currentStep.trim());
+  }
 
   const markdownText = treatmentContent.join('\\n');
 

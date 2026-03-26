@@ -32,9 +32,3 @@ State flow:
 - Strong visual consistency with design tokens.
 - Progressive streaming experience improves perceived responsiveness.
 - Simple navigation and repeat-scan loop are demo-friendly.
-
-## Gaps
-- API integration is split (stream fetch vs separate Axios helper).
-- Some UI elements are presentational only (for example language toggle behavior).
-- Shared component reuse can be improved to reduce duplicated layout markup.
-- Accessibility and validation behavior can be further hardened.
